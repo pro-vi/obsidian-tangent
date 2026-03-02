@@ -1,0 +1,8 @@
+node_modules/
+main.js
+.research/
+logs/
+scripts/
+package-lock.json
+.claude/
+.prov/
