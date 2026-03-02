@@ -1,0 +1,88 @@
+/* Tangent >>topic<< syntax highlighting */
+.tangent-syntax {
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border-radius: 3px;
+	padding: 1px 4px;
+	font-style: italic;
+}
+
+/* Quick tangent modal */
+.tangent-modal-desc {
+	color: var(--text-muted);
+	font-size: 0.9em;
+}
+
+.tangent-modal-input {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	background: var(--background-primary);
+	color: var(--text-normal);
+}
+
+.tangent-modal-input:focus {
+	border-color: var(--interactive-accent);
+	outline: none;
+}
+
+.tangent-modal-btn {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	padding: 6px 16px;
+	cursor: pointer;
+}
+
+.tangent-modal-btn:hover {
+	filter: brightness(1.1);
+}
+
+/* Custom prompt textarea — full width */
+.tangent-custom-prompt-setting .setting-item-control {
+	flex-grow: 1;
+}
+
+.tangent-custom-prompt-setting textarea {
+	width: 100%;
+	min-height: 80px;
+	resize: vertical;
+}
+
+/* Settings replacement preview */
+.tangent-replacement-preview {
+	width: 100%;
+	margin: 4px 0 18px 0;
+	padding: 0 18px;
+}
+
+.tangent-preview-label {
+	font-size: 0.7em;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--text-faint);
+	margin-bottom: 6px;
+}
+
+.tangent-preview-content {
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	padding: 14px 16px;
+	font-size: 0.9em;
+	line-height: 1.6;
+	max-height: 200px;
+	overflow: auto;
+}
+
+.tangent-preview-content p:first-child {
+	margin-top: 0;
+}
+
+.tangent-preview-content p:last-child {
+	margin-bottom: 0;
+}
+
+.tangent-preview-content .callout {
+	margin: 0;
+}
