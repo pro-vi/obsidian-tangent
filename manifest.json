@@ -3,7 +3,7 @@
 	"name": "Tangent",
 	"version": "0.1.1",
 	"minAppVersion": "1.0.0",
-	"description": "Send a background Claude agent on a >>tangent<< research mission.",
+	"description": "An Obsidian plugin that sends Claude Code agents on thinking/writing/research tangents without leaving your flow.",
 	"author": "provi",
 	"isDesktopOnly": true
 }

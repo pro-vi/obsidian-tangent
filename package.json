@@ -1,7 +1,7 @@
 {
   "name": "obsidian-tangent",
   "version": "0.1.1",
-  "description": "Tangent thinking for Obsidian — >>topic<< spawns a Claude Code agent to research and fill notes",
+  "description": "An Obsidian plugin that sends Claude Code agents on thinking/writing/research tangents without leaving your flow.",
   "main": "main.js",
   "type": "module",
   "scripts": {
