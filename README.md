@@ -1,18 +1,29 @@
-# Tangent
+<p align="center">
+  <img src="logo.png" alt="Obsidian Tangent" width="480">
+</p>
 
-An Obsidian plugin that sends [Claude Code](https://docs.anthropic.com/en/docs/claude-code) agents on research missions — without leaving your note.
+<p align="center">
+  An Obsidian plugin that sends Claude Code agents on thinking/writing/research tangents without leaving your flow.
+</p>
 
-Type `>>quantum entanglement<<` inline, keep writing. In the background, an agent reads your vault, searches the web, and writes a structured note with live progress. When it's done, the marker becomes a `[[wikilink]]`.
+---
 
-<!-- TODO: hero screenshot or GIF -->
-<!-- ![Tangent in action](docs/demo.gif) -->
+**Inline** — the trigger lives in your sentence, not a sidebar or modal. You never leave the paragraph you're writing.
+
+**Background** — the agent researches while you keep typing. No waiting, no context switch.
+
+**Vault-aware** — it reads your existing notes before writing. The output links back to what you already have.
+
+**Invisible when done** — the `>>marker<<` disappears into a clean `[[wikilink]]`. Your note reads like you never paused.
+
+**Your garden, your rules** — AI notes live in their own folder with clear attribution. They contribute to your vault without taking it over.
 
 ## How it works
 
 ```
 You write:     "I've been thinking about >>emergent behavior in ant colonies<< lately."
 
-Agent runs:    reads vault → searches web → writes note → generates concise title
+Agent runs:    reads vault → searches web → writes note → generates concise title if needed
 
 You get:       "I've been thinking about [[Emergent Ant Colony Behavior|emergent behavior in ant colonies]] lately."
                                          └─ new note in Tangents/ folder
@@ -33,7 +44,7 @@ The agent creates a structured markdown note with headings, a summary, and wikil
 
 Short prompts like `>>chess<<` become `[[chess]]` — no rename needed.
 
-Long prompts like `>>what is the relationship between quantum mechanics and consciousness<<` get a concise agent-generated title: `[[Quantum Mechanics and Consciousness|what is the relationship...]]`. The alias preserves your original inline text.
+Long prompts like `>>what is the relationship between quantum mechanics and consciousness<<` get a concise agent-generated title: `[[Quantum Mechanics and Consciousness|what is the relationship between quantum mechanics and consciousness]]`. The alias preserves your original inline text.
 
 Configurable: *always* generate titles, only *when long* (default), or *never*.
 
@@ -45,8 +56,8 @@ Configurable: *always* generate titles, only *when long* (default), or *never*.
 |---------|---------|---|
 | Claude CLI path | auto-detect | Path to `claude` binary |
 | Model | Sonnet | Sonnet, Opus, Haiku |
-| Permission mode | Default | Default, Accept edits, or Bypass |
 | Auto-trigger | On | Fire agent when `<<` is typed |
+| Concurrent agents | 3 | Maximum number of parallel agent runs |
 | Web research | On | Allow web search/fetch |
 | Tangent style | Dynamic | Research, Template, Short, Dynamic, or Custom |
 
@@ -82,7 +93,7 @@ AI-generated notes live in their own folder with clear attribution (frontmatter,
 
 ## Requirements
 
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated (`claude` in your PATH)
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated (auto-detected from `PATH` or configured via **Claude CLI path**)
 - Obsidian desktop (the plugin spawns local processes — no mobile support)
 
 ## Install
@@ -116,7 +127,7 @@ Copy `main.js`, `styles.css`, `manifest.json` to your vault's plugin directory.
 ```bash
 pnpm run dev      # watch mode
 pnpm run build    # typecheck + production build
-pnpm test         # vitest (42 unit tests)
+pnpm test         # vitest (56 tests)
 pnpm lint         # eslint
 pnpm format       # prettier
 ```
