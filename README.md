@@ -6,10 +6,6 @@
   An Obsidian plugin that sends Claude Code agents on thinking/writing/research tangents without leaving your flow.
 </p>
 
-<p align="center">
-  <video src="https://github.com/pro-vi/obsidian-tangent/releases/download/0.1.1/obsidian-tangent.mp4" width="720" controls></video>
-</p>
-
 ---
 
 - **Inline** — trigger lives in your sentence, not a sidebar or modal
