@@ -6,17 +6,33 @@
   An Obsidian plugin that sends Claude Code agents on thinking/writing/research tangents without leaving your flow.
 </p>
 
+<p align="center">
+  <video src="https://github.com/pro-vi/obsidian-tangent/releases/download/0.1.1/obsidian-tangent.mp4" width="720" controls></video>
+</p>
+
 ---
 
-**Inline** — the trigger lives in your sentence, not a sidebar or modal. You never leave the paragraph you're writing.
+- **Inline** — trigger lives in your sentence, not a sidebar or modal
+- **Background** — the agent researches while you keep typing
+- **Vault-aware** — reads your existing notes and links back to them
+- **Invisible when done** — `>>marker<<` disappears into a clean `[[wikilink]]`
+- **Your garden, your rules** — AI notes live in their own folder with clear attribution
 
-**Background** — the agent researches while you keep typing. No waiting, no context switch.
+## Install
 
-**Vault-aware** — it reads your existing notes before writing. The output links back to what you already have.
+Requires [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated. Desktop only.
 
-**Invisible when done** — the `>>marker<<` disappears into a clean `[[wikilink]]`. Your note reads like you never paused.
+### BRAT (recommended)
 
-**Your garden, your rules** — AI notes live in their own folder with clear attribution. They contribute to your vault without taking it over.
+1. Install [BRAT](https://github.com/TfTHacker/obsidian42-brat) if you haven't
+2. Add beta plugin: `pro-vi/obsidian-tangent`
+3. Enable **Tangent** in Settings → Community plugins
+
+### Manual
+
+1. Download `main.js`, `styles.css`, `manifest.json` from the [latest release](https://github.com/pro-vi/obsidian-tangent/releases)
+2. Copy to `your-vault/.obsidian/plugins/obsidian-tangent/`
+3. Enable **Tangent** in Settings → Community plugins
 
 ## How it works
 
@@ -29,8 +45,6 @@ You get:       "I've been thinking about [[Emergent Ant Colony Behavior|emergent
                                          └─ new note in Tangents/ folder
 ```
 
-The agent creates a structured markdown note with headings, a summary, and wikilinks to your existing notes. Your source note gets a clean link (and optionally a callout with the summary).
-
 ## Triggers
 
 | Method | How |
@@ -40,94 +54,12 @@ The agent creates a structured markdown note with headings, a summary, and wikil
 | **Selection** | Select text → right-click → *Create tangent from selection* |
 | **Quick tangent** | Command palette → type a topic directly |
 
-## Smart titles
-
-Short prompts like `>>chess<<` become `[[chess]]` — no rename needed.
-
-Long prompts like `>>what is the relationship between quantum mechanics and consciousness<<` get a concise agent-generated title: `[[Quantum Mechanics and Consciousness|what is the relationship between quantum mechanics and consciousness]]`. The alias preserves your original inline text.
-
-Configurable: *always* generate titles, only *when long* (default), or *never*.
-
-## Settings
-
-### Agent behavior
-
-| Setting | Default | |
-|---------|---------|---|
-| Claude CLI path | auto-detect | Path to `claude` binary |
-| Model | Sonnet | Sonnet, Opus, Haiku |
-| Auto-trigger | On | Fire agent when `<<` is typed |
-| Concurrent agents | 3 | Maximum number of parallel agent runs |
-| Web research | On | Allow web search/fetch |
-| Tangent style | Dynamic | Research, Template, Short, Dynamic, or Custom |
-
-### Note titles
-
-| Setting | Default | |
-|---------|---------|---|
-| Title mode | When long | Always / when-long / never generate titles |
-| Title prefix | *(empty)* | Prefix for all note titles (e.g. `AI:`) |
-
-### Source note
-
-| Setting | Default | |
-|---------|---------|---|
-| Replacement mode | Link only | `[[link]]` only, or link + callout summary |
-
-### Generated notes
-
-| Setting | Default | |
-|---------|---------|---|
-| Tangent folder | `Tangents` | Where notes are created |
-| Wikilinks | Existing only | Link to existing notes, create new, or none |
-| Frontmatter | On | Source, prompt, date metadata |
-| Tags | On | Default: `tangent`, `ai-generated` |
-
-## Philosophy
-
-Your vault is yours. Tangent keeps it that way.
-
-When you hit a concept worth exploring, mark it and keep writing. The agent researches in the background — reading your existing notes, optionally searching the web, producing structured output. Your writing flow stays unbroken.
-
-AI-generated notes live in their own folder with clear attribution (frontmatter, tags). They contribute to your vault without taking it over.
-
-## Requirements
-
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated (auto-detected from `PATH` or configured via **Claude CLI path**)
-- Obsidian desktop (the plugin spawns local processes — no mobile support)
-
-## Install
-
-### BRAT (recommended)
-
-1. Install [BRAT](https://github.com/TfTHacker/obsidian42-brat) if you haven't
-2. Add beta plugin: `pro-vi/obsidian-tangent`
-3. Enable **Tangent** in Settings → Community plugins
-
-### Manual
-
-1. Download `main.js`, `styles.css`, `manifest.json` from the [latest release](https://github.com/pro-vi/obsidian-tangent/releases)
-2. Create `your-vault/.obsidian/plugins/obsidian-tangent/`
-3. Copy the three files in
-4. Enable **Tangent** in Settings → Community plugins
-
-### From source
-
-```bash
-git clone https://github.com/pro-vi/obsidian-tangent
-cd obsidian-tangent
-pnpm install
-pnpm run build
-```
-
-Copy `main.js`, `styles.css`, `manifest.json` to your vault's plugin directory.
-
 ## Development
 
 ```bash
 pnpm run dev      # watch mode
 pnpm run build    # typecheck + production build
-pnpm test         # vitest (56 tests)
+pnpm test         # vitest
 pnpm lint         # eslint
 pnpm format       # prettier
 ```
