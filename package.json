@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tangent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tangent thinking for Obsidian — >>topic<< spawns a Claude Code agent to research and fill notes",
   "main": "main.js",
   "type": "module",
