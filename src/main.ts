@@ -300,7 +300,7 @@ export default class TangentPlugin extends Plugin {
 					.split(/\n/)
 					.map((l: string) => `> ${l}`)
 					.join("\n");
-				const block = `\n\n> [!tangent] [[${result.title}]]\n${summaryLines}`;
+				const callout = `> [!tangent] [[${result.title}]]\n${summaryLines}`;
 
 				editor.replaceRange(wikilink, markerFrom, markerTo);
 
@@ -308,10 +308,17 @@ export default class TangentPlugin extends Plugin {
 				const newIdx = idx + wikilink.length;
 				const afterContent = editor.getValue();
 				const blankLineIdx = afterContent.indexOf("\n\n", newIdx);
-				const insertPos = blankLineIdx >= 0 ? blankLineIdx : afterContent.length;
-				const insertAt = editor.offsetToPos(insertPos);
 
-				editor.replaceRange(block, insertAt);
+				if (blankLineIdx >= 0) {
+					// Replace \n\n with \n\ncallout\n\n (one blank line on each side)
+					const from = editor.offsetToPos(blankLineIdx);
+					const to = editor.offsetToPos(blankLineIdx + 2);
+					editor.replaceRange("\n\n" + callout + "\n\n", from, to);
+				} else {
+					// EOF: append with one blank line
+					const endPos = editor.offsetToPos(afterContent.length);
+					editor.replaceRange("\n\n" + callout, endPos);
+				}
 			}
 		} else {
 			// File not open in editor — use replaceMarkerByOffset for correctness
@@ -351,9 +358,8 @@ export default class TangentPlugin extends Plugin {
 
 		new Notice(`Found ${markers.length} tangent(s). Processing...`);
 
-		// Process markers in reverse order so positions stay valid
-		for (let i = markers.length - 1; i >= 0; i--) {
-			const marker = markers[i]!;
+		// Process markers in document order (replaceMarkerInFile re-finds by text, not offset)
+		for (const marker of markers) {
 			await this.processMarker(marker, editor, file);
 		}
 	}

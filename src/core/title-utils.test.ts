@@ -162,10 +162,10 @@ describe("replaceBoth — paragraph detection", () => {
 		expect(result).not.toBeNull();
 		// Wikilink should be inline
 		expect(result).toContain("Exploring [[Chess]] today");
-		// Callout should be between paragraphs
+		// Callout should follow paragraph with one blank line
 		expect(result).toContain("today\n\n> [!tangent]");
-		// Other paragraph should follow
-		expect(result).toContain("\n\nAnother paragraph.");
+		// Next paragraph should follow callout
+		expect(result).toContain("Summary text\n\nAnother paragraph.");
 	});
 
 	it("appends callout at EOF when no blank line follows", () => {

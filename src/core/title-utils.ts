@@ -134,7 +134,7 @@ export function replaceBoth(
 		.split(/\n/)
 		.map((l) => `> ${l}`)
 		.join("\n");
-	const block = `\n\n> [!tangent] [[${title}]]\n${summaryLines}`;
+	const callout = `> [!tangent] [[${title}]]\n${summaryLines}`;
 
 	// Replace marker inline
 	const inlined = content.slice(0, idx) + wikilink + content.slice(idx + markerText.length);
@@ -142,7 +142,12 @@ export function replaceBoth(
 	// Find end of paragraph
 	const afterMarker = idx + wikilink.length;
 	const blankLineIdx = inlined.indexOf("\n\n", afterMarker);
-	const insertPos = blankLineIdx >= 0 ? blankLineIdx : inlined.length;
 
-	return inlined.slice(0, insertPos) + block + inlined.slice(insertPos);
+	if (blankLineIdx >= 0) {
+		// Insert callout between paragraphs: paragraph\n\ncallout\n\nnext
+		// blankLineIdx points to first \n of \n\n — skip both, replace with our own spacing
+		return inlined.slice(0, blankLineIdx) + "\n\n" + callout + "\n\n" + inlined.slice(blankLineIdx + 2);
+	}
+	// EOF: append with one blank line
+	return inlined + "\n\n" + callout;
 }

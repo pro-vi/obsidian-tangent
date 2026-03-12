@@ -54,8 +54,8 @@ export class TangentAgent {
 	private app: App;
 	private settings: TangentSettings;
 	private activeProcesses: Map<string, ChildProcess> = new Map();
-	private queue: Array<() => Promise<void>> = [];
-	private running = false;
+	private queue: Array<{ task: () => Promise<void> }> = [];
+	private runningCount = 0;
 
 	constructor(app: App, settings: TangentSettings) {
 		this.app = app;
@@ -64,22 +64,26 @@ export class TangentAgent {
 
 	async run(job: TangentJob): Promise<TangentResult> {
 		return new Promise<TangentResult>((resolve) => {
-			this.queue.push(async () => {
-				const result = await this.execute(job);
-				resolve(result);
+			this.queue.push({
+				task: async () => {
+					const result = await this.execute(job);
+					resolve(result);
+				},
 			});
 			this.processQueue();
 		});
 	}
 
-	private async processQueue(): Promise<void> {
-		if (this.running) return;
-		this.running = true;
-		while (this.queue.length > 0) {
-			const task = this.queue.shift()!;
-			await task();
+	private processQueue(): void {
+		const max = this.settings.maxConcurrent || 3;
+		while (this.runningCount < max && this.queue.length > 0) {
+			const item = this.queue.shift()!;
+			this.runningCount++;
+			item.task().finally(() => {
+				this.runningCount--;
+				this.processQueue();
+			});
 		}
-		this.running = false;
 	}
 
 	private async execute(job: TangentJob): Promise<TangentResult> {

@@ -41,6 +41,8 @@ export interface TangentSettings {
 	titleMode: "always" | "when-long" | "never";
 	/** Optional prefix for note titles */
 	titlePrefix: string;
+	/** Maximum number of concurrent agent processes */
+	maxConcurrent: number;
 }
 
 export const DEFAULT_SETTINGS: TangentSettings = {
@@ -59,6 +61,7 @@ export const DEFAULT_SETTINGS: TangentSettings = {
 	tags: "tangent, ai-generated",
 	titleMode: "when-long",
 	titlePrefix: "",
+	maxConcurrent: 3,
 };
 
 export class TangentSettingTab extends PluginSettingTab {
@@ -136,6 +139,22 @@ export class TangentSettingTab extends PluginSettingTab {
 					this.plugin.settings.autoTrigger = value;
 					await this.plugin.saveSettings();
 				}),
+			);
+
+		new Setting(containerEl)
+			.setName("Concurrent agents")
+			.setDesc("Maximum number of tangent agents running at the same time.")
+			.addDropdown((dropdown) =>
+				dropdown
+					.addOption("1", "1 (sequential)")
+					.addOption("2", "2")
+					.addOption("3", "3 (default)")
+					.addOption("5", "5")
+					.setValue(String(this.plugin.settings.maxConcurrent))
+					.onChange(async (value) => {
+						this.plugin.settings.maxConcurrent = parseInt(value, 10);
+						await this.plugin.saveSettings();
+					}),
 			);
 
 		// --- Agent Behavior ---
