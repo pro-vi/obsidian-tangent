@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tangent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An Obsidian plugin that sends Claude Code agents on thinking/writing/research tangents without leaving your flow.",
   "main": "main.js",
   "type": "module",

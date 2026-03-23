@@ -35,11 +35,15 @@ Requires [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) insta
 ```
 You write:     "I've been thinking about >>emergent behavior in ant colonies<< lately."
 
-Agent runs:    reads vault → searches web → writes note → generates concise title if needed
+Agent runs:    reads vault → searches web → generates content → plugin writes note
 
 You get:       "I've been thinking about [[Emergent Ant Colony Behavior|emergent behavior in ant colonies]] lately."
                                          └─ new note in Tangents/ folder
 ```
+
+## Security
+
+Claude can **read** your vault but never **write** to it. The agent runs with a strict tool whitelist (`Read`, `Glob`, `Grep`, and optionally `WebSearch`/`WebFetch`) — all read-only. Note creation and file edits go through Obsidian's vault API on the plugin side, not through Claude.
 
 ## Triggers
 
